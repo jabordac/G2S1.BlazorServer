@@ -1,0 +1,36 @@
+﻿@page "/books"
+@page "/books/{BookId:int}/{BookName}"
+
+@using G2S1.BlazorServer.Pages.Books.Components
+
+@inject ISnackbar snackBar
+
+<MudText Typo="Typo.h5" Color="Color.Primary">Books</MudText>
+
+<MudText Typo="Typo.subtitle1" Color="Color.Primary">@BookId | @BookName</MudText>
+
+<PageComponent PageId="1" OnPagePrintClick="OnPagePrintClick">
+    <TitleFragment>
+        <MudText Typo="Typo.h3" Color="Color.Error">Introducción a Blazor</MudText>
+    </TitleFragment>
+    <ContentFragment>
+        Guía de Blazor
+    </ContentFragment>
+</PageComponent>
+
+<PageComponent PageId="2" OnPagePrintClick="OnPagePrintClick">
+    <TitleFragment>
+        Introducción a WebAPI
+    </TitleFragment>
+</PageComponent>
+
+
+@code {
+    [Parameter] public int BookId { get; set; }
+    [Parameter] public string BookName { get; set; }
+
+    private void OnPagePrintClick(int pageId)
+    {
+        snackBar.Add($"Imprimir Página {pageId}");
+    }
+}
