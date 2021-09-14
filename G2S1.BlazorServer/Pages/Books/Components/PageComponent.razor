@@ -1,6 +1,6 @@
-﻿@inject ISnackbar snackBar
+﻿<MudPaper Elevation="2">
+    <MudText Typo="Typo.subtitle1" Color="Color.Primary">@Book.BoodId | @Book.Name</MudText>
 
-<MudPaper Elevation="2">
     <MudText Typo="Typo.h3">@PageId</MudText>
 
     @TitleFragment
@@ -9,24 +9,11 @@
     {
         @ContentFragment
     }
-    else 
-    { 
+    else
+    {
         <h2>Contenido por Defecto</h2>
     }
 
     <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => OnPrintClick(@PageId))">Imprimir</MudButton>
 </MudPaper>
 
-@code {
-    [Parameter] public int PageId { get; set; }
-    //[Parameter] public string Title { get; set; }
-    //[Parameter] public string Description { get; set; }
-    [Parameter] public EventCallback<int> OnPagePrintClick { get; set; }
-    [Parameter] public RenderFragment TitleFragment { get; set; }
-    [Parameter] public RenderFragment ContentFragment { get; set; }
-
-    private void OnPrintClick(int pageId)
-    {
-        OnPagePrintClick.InvokeAsync(pageId);
-    }
-}

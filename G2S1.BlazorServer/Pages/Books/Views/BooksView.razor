@@ -1,33 +1,51 @@
 ﻿@page "/books"
-@page "/books/{BookId:int}/{BookName}"
 
 @using G2S1.BlazorServer.Pages.Books.Components
 
 @inject ISnackbar snackBar
 
-<MudText Typo="Typo.h5" Color="Color.Primary">Books</MudText>
+@if (isLoading)
+{
+    <MudProgressCircular Color="Color.Error" Indeterminate="true" />
+}
+else
+{
+    <MudText Typo="Typo.h5" Color="Color.Primary">Books</MudText>
 
-<MudText Typo="Typo.subtitle1" Color="Color.Primary">@BookId | @BookName</MudText>
-
-<PageComponent PageId="1" OnPagePrintClick="OnPagePrintClick">
-    <TitleFragment>
-        <MudText Typo="Typo.h3" Color="Color.Error">Introducción a Blazor</MudText>
-    </TitleFragment>
-    <ContentFragment>
-        Guía de Blazor
-    </ContentFragment>
-</PageComponent>
-
-<PageComponent PageId="2" OnPagePrintClick="OnPagePrintClick">
-    <TitleFragment>
-        Introducción a WebAPI
-    </TitleFragment>
-</PageComponent>
+    <CascadingValue Name="Book" Value="@Book">
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="12" md="4">
+                <PageComponent PageId="1" OnPagePrintClick="OnPagePrintClick">
+                    <TitleFragment>
+                        <MudText Typo="Typo.h3" Color="Color.Error">Introducción a Blazor</MudText>
+                    </TitleFragment>
+                    <ContentFragment>
+                        Guía de Blazor
+                    </ContentFragment>
+                </PageComponent>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="4">
+                <PageComponent PageId="2" OnPagePrintClick="OnPagePrintClick">
+                    <TitleFragment>
+                        Introducción a WebAPI
+                    </TitleFragment>
+                </PageComponent>
+            </MudItem>
+        </MudGrid>
+    </CascadingValue>
+}
 
 
 @code {
-    [Parameter] public int BookId { get; set; }
-    [Parameter] public string BookName { get; set; }
+    [Parameter] public Book Book { get; set; }
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //await Task.Delay(5000);
+        Book = new Book { BoodId = 1, Name = "Blazor Sin Fronteras" };
+        isLoading = false;
+    }
 
     private void OnPagePrintClick(int pageId)
     {

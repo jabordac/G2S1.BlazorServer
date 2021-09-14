@@ -1,5 +1,20 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@inject NavigationManager navigationManager
+
+<MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="OnClick">Go From Click</MudButton>
+
+<MudButton Variant="Variant.Filled" Color="Color.Secondary" Link="/Books">Go to Books</MudButton>
+
+<G2S1.BlazorServer.Pages.Books.Views.BooksView>
+
+</G2S1.BlazorServer.Pages.Books.Views.BooksView>
 
 
+@code {
+
+    private void OnClick()
+    {
+        navigationManager.NavigateTo("/Books");
+    }
+}
