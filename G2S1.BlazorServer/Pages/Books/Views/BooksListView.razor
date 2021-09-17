@@ -1,0 +1,58 @@
+﻿@page "/Books"
+
+<MudText Typo="Typo.h5"><b>Books</b></MudText>
+<MudText Typo="Typo.subtitle1">Cree y administre los libros de la biblioteca.</MudText>
+
+<MudTable Items="@Books" Breakpoint="Breakpoint.MdAndDown" Dense="true" Hover="true" Class="mt-3"
+          Filter="new Func<Book, bool>(FilterFunc)" Loading="@isLoading" Elevation="0">
+    <ToolBarContent>
+        <MudGrid Spacing="0" Class="d-flex justify-space-between pb-5">
+            <MudItem xs="7" md="4" lg="4">
+                <MudTextField @bind-Value="searchString" Variant="Variant.Outlined" Placeholder="Buscar Libro" Clearable="true"
+                              Adornment="Adornment.End" AdornmentColor="Color.Primary" AdornmentIcon="@Icons.Material.Filled.Search"
+                              IconSize="Size.Medium" Margin="Margin.Dense" />
+            </MudItem>
+            <MudItem xs="5" md="3" lg="2" Class="d-flex justify-end">
+                <MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.AddCircle" OnClick="OnAddBook">Agregar Libro</MudButton>
+            </MudItem>
+        </MudGrid>
+    </ToolBarContent>
+    <ColGroup>
+        <col style="width: 20px;" />
+        <col />
+        <col style="width: 20%;" />
+        <col style="width: 20px;"/>
+    </ColGroup>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortBy="new Func<Book, object>(x => x.BookId)">Id</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<Book, object>(x => x.Name)">Nombre</MudTableSortLabel></MudTh>
+        <MudTh Class="text-center"><MudTableSortLabel SortBy="new Func<Book, object>(x => x.AuthorId)">Autor</MudTableSortLabel></MudTh>
+        <MudTh Class="text-center">Páginas</MudTh>
+        <MudTh Class="text-center">Precio</MudTh>
+        <MudTh Class="text-center">Publicación</MudTh>
+        <MudTh Class="text-center">Estado</MudTh>
+        <MudTh Class="text-center">Acciones</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.BookId</MudTd>
+        <MudTd>@context.Name</MudTd>
+        <MudTd>@context.AuthorId</MudTd>
+        <MudTd>@context.Pages</MudTd>
+        <MudTd>@context.Price</MudTd>
+        <MudTd>@context.PublishDate</MudTd>
+        <MudTd Class="text-center">
+            <MudSwitch T="bool" Checked=@context.State CheckedChanged="@(() => OnDeleteBook(context.BookId.GetValueOrDefault()))" Color="Color.Info" />
+        </MudTd>
+        <MudTd Class="text-center">
+            <MudMenu Icon="@Icons.Material.Filled.MoreHoriz" Size="Size.Medium" OffsetX="false" OffsetY="true" Dense="true"
+                     Direction="Direction.Right" DisableRipple="true">
+                <MudMenuItem OnClick="@(() => OnViewBook(context.BookId.GetValueOrDefault()))">Ver</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OnEditBook(context.BookId.GetValueOrDefault()))">Editar</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OnDeleteBook(context.BookId.GetValueOrDefault()))">Eliminar</MudMenuItem>
+            </MudMenu>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager InfoFormat="Página {first_item}-{last_item} de {all_items}" DisableRowsPerPage="true" PageSizeOptions="new int[] { 20, 100 }" />
+    </PagerContent>
+</MudTable>

@@ -1,0 +1,11 @@
+﻿<MudText Typo="Typo.h5">@State</MudText>
+
+@code {
+    [Parameter] public string State { get; set; }
+
+    public void ChangeState(string newState)
+    {
+        State = newState;
+        StateHasChanged();
+    }
+}

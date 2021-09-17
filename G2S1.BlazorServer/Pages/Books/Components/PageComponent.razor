@@ -1,19 +1,29 @@
-﻿<MudPaper Elevation="2">
-    <MudText Typo="Typo.subtitle1" Color="Color.Primary">@Book.BoodId | @Book.Name</MudText>
-
-    <MudText Typo="Typo.h3">@PageId</MudText>
-
-    @TitleFragment
-
-    @if (ContentFragment != null)
-    {
-        @ContentFragment
-    }
-    else
-    {
-        <h2>Contenido por Defecto</h2>
-    }
-
-    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => OnPrintClick(@PageId))">Imprimir</MudButton>
+﻿<MudPaper Elevation="2" Class="pa-10">
+        <MudGrid Spacing="0">
+            <MudItem xs="9">
+                <MudText Typo="Typo.h5"><b>P</b>@PageId | @State</MudText>
+            </MudItem>
+            <MudItem xs="3">
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="OnFavoriteClick">Favorito</MudButton>
+            </MudItem>
+            <MudItem xs="9">
+                <MudText Typo="Typo.h6" Class="my-2">@Book.Name | @FavoriteCount</MudText>
+            </MudItem>
+            <MudItem xs="12">
+                @TitleFragment
+            </MudItem>
+            <MudItem xs="12">
+                @if (ContentFragment != null)
+                {
+                    @ContentFragment
+                }
+                else
+                {
+                    <MudText Typo="Typo.body1">Contenido por Defecto</MudText>
+                }
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-end">
+                <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="@(() => OnPrintClick(@PageId))">Imprimir</MudButton>
+            </MudItem>
+        </MudGrid>
 </MudPaper>
-
